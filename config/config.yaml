@@ -1,0 +1,15 @@
+# 股票配置文件
+symbols:
+  - "AAPL.US"
+  - "TSLA.US"
+  - "NVDA.US"
+
+# 查询日期列表 (格式: YYYY-MM-DD)
+dates:
+  - "2025-10-24"
+  - "2025-10-23"
+
+# 查询设置
+settings:
+  period: "OneMinute"  # 可选: OneMinute, FiveMinute, FifteenMinute, ThirtyMinute
+  adjust_type: "No"    # 可选: No, ForwardAdjust

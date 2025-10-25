@@ -1,0 +1,10 @@
+longport:
+  app_key: ""
+  app_secret: ""
+  access_token: ""
+  # Optional overrides:
+  # quote_url: ""
+  # trade_url: ""
+  # enable_overnight: false
+  # language: 0  # 0: zh-CN, 1: zh-TW, 2: en
+  # region: "cn"
