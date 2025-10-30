@@ -1,10 +1,8 @@
 longport:
-  app_key: ""
-  app_secret: ""
-  access_token: ""
-  # Optional overrides:
-  # quote_url: ""
-  # trade_url: ""
-  # enable_overnight: false
-  # language: 0  # 0: zh-CN, 1: zh-TW, 2: en
-  # region: "cn"
+  app_key: "YOUR_APP_KEY"
+  app_secret: "YOUR_APP_SECRET"
+  access_token: "YOUR_ACCESS_TOKEN"
+  region: "cn"      # HK 或 CN 
+  threads: 5        # 每账号并发线程（最大 5）
+  rps: 10           # 每账号每秒最大请求数（最大 10）
+  timeout_ms: 10000 # 每账号请求超时毫秒（默认 10000）

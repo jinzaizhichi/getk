@@ -7,6 +7,8 @@ require (
 	github.com/longportapp/openapi-go v0.16.4
 )
 
+require golang.org/x/time v0.14.0 // indirect
+
 require (
 	github.com/Allenxuxu/ringbuffer v0.0.11 // indirect
 	github.com/BurntSushi/toml v1.3.2 // indirect

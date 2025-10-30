@@ -2,7 +2,7 @@ package appconfig
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"time"
 
 	"gopkg.in/yaml.v3"
@@ -20,7 +20,7 @@ type Config struct {
 
 // Load 从YAML文件加载配置
 func Load(filepath string) (*Config, error) {
-	data, err := ioutil.ReadFile(filepath)
+	data, err := os.ReadFile(filepath)
 	if err != nil {
 		return nil, fmt.Errorf("读取配置文件失败: %v", err)
 	}

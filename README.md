@@ -18,9 +18,9 @@
 一个基于长桥证券接口（LongPort OpenAPI）的抓取工具，按配置批量抓取指定股票在指定日期的历史 K 线并写入 PostgreSQL。支持多只股票、多日期、去重插入、进度显示。
 
 ### 功能特性
-- 批量抓取指定标的的历史 K 线（分钟级）
+- 批量多线程抓取指定标的的历史 K 线（分钟级）
 - 多日期批处理，自动去重（`ON CONFLICT DO NOTHING`）
-- 自动根据标的生成数据表（如 `AAPL.US` → `aapl`）
+- 自动根据标的生成数据表（如 `AAPL.US` → `aapl_us`）
 - 支持 `go run` 与二进制部署两种运行方式
 
 ### 环境要求
@@ -99,6 +99,9 @@ longport:
   app_key: "xxxxx"
   app_secret: "xxxxx"
   access_token: "xxxxx"
+  region: "cn"
+  threads: 5
+  rps: 10
 ```
 也可用环境变量（PowerShell）：
 ```powershell
@@ -108,12 +111,12 @@ setx LONGPORT_ACCESS_TOKEN "your-access-token"
 ```
 
 ### 数据库表结构与写入规则
-- 表名：取股票代码点号前部分并转小写。例如 `AAPL.US` → `aapl`。
+- 表名：取股票代码点号前部分并转小写，加上下划线分隔符。例如 `AAPL.US` → `aapl_us`。
 - 去重：以 `timestamp` 为唯一键，`ON CONFLICT (timestamp) DO NOTHING` 跳过重复。
 
-示例表结构（以 `aapl` 为例）：
+示例表结构（以 `aapl_us` 为例）：
 ```sql
-CREATE TABLE IF NOT EXISTS aapl (
+CREATE TABLE IF NOT EXISTS aapl_us (
   timestamp   TIMESTAMPTZ PRIMARY KEY,
   open        DOUBLE PRECISION,
   close       DOUBLE PRECISION,
@@ -149,9 +152,9 @@ LongPort 不针对接口服务额外收取开通或使用费用，只需开通 L
 A data fetcher powered by LongPort OpenAPI. It batches historical K-line (candlestick) data for specified symbols and dates, and writes into PostgreSQL. Supports multiple symbols, multiple dates, de-dup insert, and progress display.
 
 ### Features
-- Batch fetch minute-level historical K-line for selected symbols
+- Batch multi-thread fetch minute-level historical K-line for selected symbols
 - Multi-date processing with de-dup (`ON CONFLICT DO NOTHING`)
-- Auto-create table per symbol (e.g. `AAPL.US` → `aapl`)
+- Auto-create table per symbol (e.g. `AAPL.US` → `aapl_us`)
 - Works with both `go run` and compiled binary deployments
 
 ### Requirements
@@ -230,6 +233,9 @@ longport:
   app_key: "xxxxx"
   app_secret: "xxxxx"
   access_token: "xxxxx"
+  region: "cn"
+  threads: 5
+  rps: 10
 ```
 Or use environment variables (PowerShell):
 ```powershell
@@ -239,12 +245,12 @@ setx LONGPORT_ACCESS_TOKEN "your-access-token"
 ```
 
 ### Table Schema & Insert Rules
-- Table name: take the part before the dot and lowercase (e.g. `AAPL.US` → `aapl`).
+- Table name: take the part before the dot and lowercase, with underscore separator (e.g. `AAPL.US` → `aapl_us`).
 - De-dup: `timestamp` as primary key; `ON CONFLICT (timestamp) DO NOTHING`.
 
-Example (for `aapl`):
+Example (for `aapl_us`):
 ```sql
-CREATE TABLE IF NOT EXISTS aapl (
+CREATE TABLE IF NOT EXISTS aapl_us (
   timestamp   TIMESTAMPTZ PRIMARY KEY,
   open        DOUBLE PRECISION,
   close       DOUBLE PRECISION,
